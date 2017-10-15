@@ -1,45 +1,35 @@
-const Drone = require('drone-node');
-const plugin = new Drone.Plugin();
 const request = require('request');
 
 
-plugin.parse().then((params) => {
+if (!process.env.PLUGIN_SENDKEY) {
+  console.log("no send key");
+  process.exit(2);
+} else {
+  var sendkey = process.env.PLUGIN_SENDKEY;
 
-  // gets build and repository information for
-  // the current running build
-  const build = params.build;
-  const repo  = params.repo;
-  const workspace = params.workspace;
+}
 
-  // gets plugin-specific parameters defined in
-  // the .drone.yml file
-  const vargs = params.vargs;
+var name = process.env.DRONE_REPO_NAME;
+var status = process.env.DRONE_BUILD_STATUS;
+var commit = process.env.DRONE_COMMIT_SHA;
+var link = process.env.DRONE_BUILD_LINK;
 
-  if (!vargs.sendkey) {
-    console.log('sendkey not exist!');
-    process.exit(2);
-  }
 
-  var encodedText  = encodeURIComponent(`Building of ${repo.name} is ${build.status}`);
+  var encodedText  = encodeURIComponent(`Building of ${name} is ${status}`);
   var encodedDesp =  encodeURIComponent(`
-  ## ${repo.clone_url}: ${build.status}
+  ## ${link}: ${status}
 
-  + branch: ${build.branch}
-  + commit: ${build.commit}
-  + event: ${build.push}
-  + started_at : ${new Date(build.started_at)}
-  + finished_at: ${new Date(build.finished_at)}
+  + commit: ${commit}
   `);
 
-  request({
-    uri: `https://pushbear.ftqq.com/sub?sendkey=${vargs.sendkey}&text=${encodedText}&desp=${encodedDesp}`,
-    method: 'GET',
-  }, (err, response, body) => {
-    if (!err && response.statusCode === 200) {
-      var result = JSON.parse(body);
-      console.log(result.data);
-    } else {
-      console.log(err);
-    }
-  });
+request({
+  uri: `https://pushbear.ftqq.com/sub?sendkey=${sendkey}&text=${encodedText}&desp=${encodedDesp}`,
+  method: 'GET',
+}, (err, response, body) => {
+  if (!err && response.statusCode === 200) {
+    var result = JSON.parse(body);
+    console.log(result.data);
+  } else {
+    console.log(err);
+  }
 });
