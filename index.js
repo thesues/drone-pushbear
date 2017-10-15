@@ -33,17 +33,13 @@ plugin.parse().then((params) => {
 
   request({
     uri: `https://pushbear.ftqq.com/sub?sendkey=${vargs.sendkey}&text=${encodedText}&desp=${encodedDesp}`,
-    method:'GET',
-  },(err, response, body)=>{
+    method: 'GET',
+  }, (err, response, body) => {
     if (!err && response.statusCode === 200) {
       var result = JSON.parse(body);
-      if (result.code !== "0") {
-        console.log(result.message);
-      } else {
-        console.log(result.message);
-      }
-  } else {
+      console.log(result.data);
+    } else {
       console.log(err);
-  }
+    }
   });
 });
