@@ -1,0 +1,15 @@
+{
+  "name": "drone-pushbear",
+  "version": "1.0.0",
+  "description": "A drone ci's notify service",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js < test.json"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "drone-node": "^1.0.1",
+    "request": "^2.83.0"
+  }
+}
