@@ -1,0 +1,5 @@
+pipeline:
+  pushbear:
+    image: thesues/drone-pushbear
+    url: XXXX
+    secrets: [sendkey]
