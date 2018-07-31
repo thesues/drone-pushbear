@@ -3,3 +3,10 @@ pipeline:
     image: thesues/drone-pushbear
     url: XXXX
     secrets: [sendkey]
+  s3:
+    image: plugins/s3
+    bucket: jmdrepo
+    source: "*.json"
+    secrets: [AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY]
+    path_style: false
+    endpoint: https://oss-cn-beijing.aliyuncs.com
