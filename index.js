@@ -13,6 +13,7 @@ var status = process.env.DRONE_BUILD_STATUS|| "";
 var commit = process.env.DRONE_COMMIT_SHA || "";
 var link = process.env.DRONE_BUILD_LINK || "" ;
 var tag = process.env.DRONE_TAG || "";
+var comment = process.env.DRONE_COMMIT_MESSAGE || "";
 
 var encodedText;
 if (tag === "") {
@@ -25,7 +26,10 @@ if (tag === "") {
   var encodedDesp =  encodeURIComponent(`
   ## ${link}: ${status}
 
+  ${comment}
+
   + commit: ${commit}
+
   `);
 
 var url=`https://pushbear.ftqq.com/sub?sendkey=${sendkey}&text=${encodedText}&desp=${encodedDesp}`;
