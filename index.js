@@ -15,17 +15,12 @@ var link = process.env.DRONE_BUILD_LINK || "" ;
 var tag = process.env.DRONE_TAG || "";
 var comment = process.env.DRONE_COMMIT_MESSAGE || "";
 
-var encodedText;
-if (tag === "") {
-  encodedText  = encodeURIComponent(`${name}的构建结果是${status}`);
-} else {
-  encodedText  = encodeURIComponent(`${name}的构建结果是${status},TAG是${tag}`);
-}
+  var encodedText  = encodeURIComponent(`${name}的构建结果是${status}`);
 
-  var encodedText  = encodeURIComponent(`${name}的构建结果是${status},TAG是`);
   var encodedDesp =  encodeURIComponent(`
   ## ${link}: ${status}
-
+  
+  TAG是${tag}
   ${comment}
 
   + commit: ${commit}
